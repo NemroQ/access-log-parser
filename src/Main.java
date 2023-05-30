@@ -1,22 +1,36 @@
+import java.io.File;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Введите первое число: ");
-        int firstNumber = new Scanner(System.in).nextInt();
-        System.out.println("Введите второе число: ");
-        int secondNumber = new Scanner(System.in).nextInt();
+        int counter = 1;
+        String result = "";
+        File file = getFilePath();
+        boolean fileExists = file.exists();
+        boolean isDirectory = file.isDirectory();
+        while (!fileExists || isDirectory) {
+            if (!fileExists) {
+                System.out.println("По указанному пути: \"" + file.getPath() + "\" файл не существует");
+                counter++;
+                file = getFilePath();
+                fileExists = file.exists();
+                isDirectory = file.isDirectory();
+                continue;
+            }
+            if (isDirectory) {
+                System.out.println("В указанном пути: \"" + file.getPath() + "\" указан путь к директории, а не к файлу");
+                counter++;
+                file = getFilePath();
+                fileExists = file.exists();
+                isDirectory = file.isDirectory();
+            }
+        }
+        System.out.println("Указан путь к файлу: \"" + file.getPath() + "\". Это файл номер " + counter);
+    }
 
-        int sum = firstNumber + secondNumber;
-        System.out.println("Сумма введённых числе: " + sum);
-
-        int different = firstNumber - secondNumber;
-        System.out.println("Разность введённых чисел: " + different);
-
-        int produce = firstNumber * secondNumber;
-        System.out.println("Произведение введённых чисел: " + produce);
-
-        double quotient = (double) firstNumber / secondNumber;
-        System.out.println("Частное введённых чисел: " + quotient);
+    public static File getFilePath() {
+        System.out.println("Укажите путь к файлу:");
+        String path = new Scanner(System.in).nextLine();
+        return new File(path);
     }
 }
