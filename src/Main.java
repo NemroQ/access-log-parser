@@ -1,9 +1,36 @@
+import java.io.File;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Введите текст и нажмите <Enter>: ");
-        String text = new Scanner(System.in).nextLine();
-        System.out.println("Длина текста: " + text.length());
+        int counter = 1;
+        String result = "";
+        File file = getFilePath();
+        boolean fileExists = file.exists();
+        boolean isDirectory = file.isDirectory();
+        while (!fileExists || isDirectory) {
+            if (!fileExists) {
+                System.out.println("По указанному пути: \"" + file.getPath() + "\" файл не существует");
+                counter++;
+                file = getFilePath();
+                fileExists = file.exists();
+                isDirectory = file.isDirectory();
+                continue;
+            }
+            if (isDirectory) {
+                System.out.println("В указанном пути: \"" + file.getPath() + "\" указан путь к директории, а не к файлу");
+                counter++;
+                file = getFilePath();
+                fileExists = file.exists();
+                isDirectory = file.isDirectory();
+            }
+        }
+        System.out.println("Указан путь к файлу: \"" + file.getPath() + "\". Это файл номер " + counter);
+    }
+
+    public static File getFilePath() {
+        System.out.println("Укажите путь к файлу:");
+        String path = new Scanner(System.in).nextLine();
+        return new File(path);
     }
 }
