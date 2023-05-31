@@ -3,15 +3,13 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        int counter = 1;
-        String result = "";
+        int counter = 0;
         File file = getFilePath();
         boolean fileExists = file.exists();
         boolean isDirectory = file.isDirectory();
-        while (!fileExists || isDirectory) {
+        while (true) {
             if (!fileExists) {
                 System.out.println("По указанному пути: \"" + file.getPath() + "\" файл не существует");
-                counter++;
                 file = getFilePath();
                 fileExists = file.exists();
                 isDirectory = file.isDirectory();
@@ -19,13 +17,18 @@ public class Main {
             }
             if (isDirectory) {
                 System.out.println("В указанном пути: \"" + file.getPath() + "\" указан путь к директории, а не к файлу");
-                counter++;
                 file = getFilePath();
                 fileExists = file.exists();
                 isDirectory = file.isDirectory();
+                continue;
             }
+            counter++;
+            System.out.println("Указан путь к файлу: \"" + file.getPath() + "\". Это файл номер " + counter);
+            file = getFilePath();
+            fileExists = file.exists();
+            isDirectory = file.isDirectory();
         }
-        System.out.println("Указан путь к файлу: \"" + file.getPath() + "\". Это файл номер " + counter);
+
     }
 
     public static File getFilePath() {
