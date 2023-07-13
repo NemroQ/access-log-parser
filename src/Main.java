@@ -1,39 +1,33 @@
-import java.io.File;
+import java.io.*;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        int counter = 0;
-        File file = getFilePath();
-        boolean fileExists = file.exists();
-        boolean isDirectory = file.isDirectory();
-        while (true) {
-            if (!fileExists) {
-                System.out.println("По указанному пути: \"" + file.getPath() + "\" файл не существует");
-                file = getFilePath();
-                fileExists = file.exists();
-                isDirectory = file.isDirectory();
-                continue;
-            }
-            if (isDirectory) {
-                System.out.println("В указанном пути: \"" + file.getPath() + "\" указан путь к директории, а не к файлу");
-                file = getFilePath();
-                fileExists = file.exists();
-                isDirectory = file.isDirectory();
-                continue;
-            }
-            counter++;
-            System.out.println("Указан путь к файлу: \"" + file.getPath() + "\". Это файл номер " + counter);
-            file = getFilePath();
-            fileExists = file.exists();
-            isDirectory = file.isDirectory();
-        }
-
-    }
-
-    public static File getFilePath() {
         System.out.println("Укажите путь к файлу:");
         String path = new Scanner(System.in).nextLine();
-        return new File(path);
+        try {
+            FileReader fileReader = new FileReader(path);
+            BufferedReader reader = new BufferedReader(fileReader);
+            String line;
+            int counter = 0;
+            int shortLine = 1024;
+            int longLine = 0;
+            while ((line = reader.readLine()) != null) {
+                int lenght = line.length();
+                if (lenght > 1024) throw new ExceededStringLenghtException("Длина строки файла превышает 1024 символа");
+                if (lenght < shortLine) shortLine = lenght;
+                if (lenght > longLine) longLine = lenght;
+                counter++;
+            }
+            System.out.println("Общее количество строк в файле: " + counter);
+            System.out.println("Длина самой короткой строки: " + shortLine);
+            System.out.println("Длина самой длинной строки: " + longLine);
+        } catch (FileNotFoundException e) {
+            System.out.println("Указанный файл не существует");
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("Невозможно прочитать указанный файл");
+            e.printStackTrace();
+        }
     }
 }
