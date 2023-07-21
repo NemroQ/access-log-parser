@@ -27,5 +27,7 @@ public class Main {
         System.out.println("Общее количество траффика за час: " + stat.getTrafficRate());
         System.out.println(stat.getOsList());
         System.out.println(stat.getOsPart());
+        System.out.println(stat.getBrowserList());
+        System.out.println(stat.getBrowserPart());
     }
 }
