@@ -1,11 +1,11 @@
-import java.util.Locale;
-
 public class UserAgent {
     public String string;
     private final String osType;
     private final String browser;
+    private int botCounter = 0;
 
     public UserAgent(String string) {
+        this.string = string;
         if (string.startsWith("X11;")) {
             osType = string.split(" ")[1].replace(";", "").trim();
         } else {
@@ -26,7 +26,15 @@ public class UserAgent {
         return osType;
     }
 
+    public int getBotCounter() {
+        return botCounter;
+    }
+
     public String getBrowser() {
         return browser;
+    }
+
+    public boolean isBot() {
+        return this.string.toLowerCase().contains("bot");
     }
 }
