@@ -27,5 +27,7 @@ public class Main {
         System.out.println("Среднее количество посещений за час: " + stat.averageVisitPerHour());
         System.out.println("Среднее количество ошибок за час: " + stat.averageErrorResponsePerHour());
         System.out.println("Среднее количество посещений одним пользователем: " + stat.averageVisitPerUser());
+        System.out.println("Максимальное количество запросов в секунду: " + stat.maxRequestPerSecond());
+        System.out.println(stat.getDomainSet());
     }
 }
