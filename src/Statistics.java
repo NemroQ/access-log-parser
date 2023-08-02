@@ -1,3 +1,4 @@
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class Statistics {
@@ -13,7 +14,8 @@ public class Statistics {
         if (currentDateTime.isAfter(maxTime)) maxTime = currentDateTime;
     }
 
-    public long getTrafficRate() {
-        return (long) totalTraffic / maxTime.getHour() - minTime.getHour();
+    public BigDecimal getTrafficRate() {
+        BigDecimal bigDecimal = new BigDecimal(totalTraffic);
+        return bigDecimal.divide(new BigDecimal(maxTime.getHour() - minTime.getHour()));
     }
 }
