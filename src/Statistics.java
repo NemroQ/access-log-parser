@@ -10,6 +10,7 @@ public class Statistics {
     private LocalDateTime minTime = LocalDateTime.MAX;
     private LocalDateTime maxTime = LocalDateTime.MIN;
     private ArrayList<String> ipList = new ArrayList<>();
+    private HashMap<String, Integer> uniqVisit = new HashMap<>();
     private HashMap<LocalDateTime, Integer> requestMap = new HashMap<>();
     private HashSet<String> domainSet = new HashSet<>();
 
@@ -25,7 +26,12 @@ public class Statistics {
                 requestMap.put(logEntry.getTime(), 1);
             } else {
                 int t = requestMap.get(logEntry.getTime());
-                requestMap.replace(logEntry.getTime(), t++);
+                requestMap.replace(logEntry.getTime(), ++t);
+            }
+            if (!uniqVisit.containsKey(logEntry.getIp())) uniqVisit.put(logEntry.getIp(), 1);
+            else {
+                int c = uniqVisit.get(logEntry.getIp());
+                uniqVisit.replace(logEntry.getIp(), ++c);
             }
         }
         if (logEntry.getResponseCode() > 399) errorResponseCount++;
@@ -74,6 +80,11 @@ public class Statistics {
     }
 
     public int maxRequestPerSecond() {
-        return requestMap.values().stream().max(Integer::compare).get();
+        return requestMap.values().stream().max(Integer::compareTo).get();
     }
+
+    public int maxVisitPerUser() {
+        return uniqVisit.values().stream().max(Integer::compareTo).get();
+    }
+
 }
