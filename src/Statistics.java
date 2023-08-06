@@ -1,5 +1,6 @@
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 public class Statistics {
     private long totalTraffic = 0;
@@ -14,8 +15,8 @@ public class Statistics {
         if (currentDateTime.isAfter(maxTime)) maxTime = currentDateTime;
     }
 
-    public BigDecimal getTrafficRate() {
-        BigDecimal bigDecimal = new BigDecimal(totalTraffic);
-        return bigDecimal.divide(new BigDecimal(maxTime.getHour() - minTime.getHour()));
+    public double getTrafficRate() {
+        long time = ChronoUnit.SECONDS.between(minTime, maxTime);
+        return Math.round(((double) totalTraffic / time) * 1000) / 1000D;
     }
 }
