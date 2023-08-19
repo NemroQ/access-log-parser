@@ -1,4 +1,5 @@
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -34,7 +35,7 @@ public class Statistics {
                 uniqVisit.replace(logEntry.getIp(), ++c);
             }
         }
-        if (logEntry.getResponseCode() > 399) errorResponseCount++;
+        if ((logEntry.getResponseCode() > 399) && (logEntry.getResponseCode() < 600)) errorResponseCount++;
 
         if (ipList == null) ipList.add(logEntry.getIp());
         else {
@@ -59,8 +60,9 @@ public class Statistics {
         return domainSet;
     }
 
-    public long getTrafficRate() {
-        return (long) totalTraffic / maxTime.getHour() - minTime.getHour();
+    public double calcTrafficRate() {
+        long time = ChronoUnit.SECONDS.between(minTime, maxTime);
+        return Math.round(((double) totalTraffic / time) * 1000) / 1000D;
     }
 
     public ArrayList<String> getIpList() {

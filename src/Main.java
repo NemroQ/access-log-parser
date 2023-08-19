@@ -23,7 +23,7 @@ public class Main {
             System.out.println("Невозможно прочитать указанный файл");
             e.printStackTrace();
         }
-        System.out.println("Общее количество траффика за час: " + stat.getTrafficRate());
+        System.out.println("Общее количество траффика за час: " + stat.calcTrafficRate());
         System.out.println("Среднее количество посещений за час: " + stat.averageVisitPerHour());
         System.out.println("Среднее количество ошибок за час: " + stat.averageErrorResponsePerHour());
         System.out.println("Среднее количество посещений одним пользователем: " + stat.averageVisitPerUser());
