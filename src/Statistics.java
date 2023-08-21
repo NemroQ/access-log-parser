@@ -85,5 +85,4 @@ public class Statistics {
     public int getMaxVisitPerUser() {
         return uniqVisit.values().stream().max(Integer::compareTo).get();
     }
-
 }

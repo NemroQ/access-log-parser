@@ -3,6 +3,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.Locale;
 
@@ -22,7 +23,7 @@ public class LogEntry {
         String[] substr1 = substr[1].split(" ");
         String strtime = substr1[0].concat(substr1[1]).trim().replace("]", "");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MMM/yyyy:HH:mm:ssX", Locale.US);
-        time = LocalDateTime.parse(strtime, formatter);
+        time = LocalDateTime.parse(strtime, formatter).truncatedTo(ChronoUnit.SECONDS);
         method = HttpMethod.valueOf(substr1[2].trim());
         path = substr1[3].trim();
         responseCode = Integer.parseInt(substr1[5].trim());
