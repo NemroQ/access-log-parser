@@ -1,6 +1,5 @@
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -10,7 +9,7 @@ public class Statistics {
     private int errorResponseCount = 0;
     private LocalDateTime minTime = LocalDateTime.MAX;
     private LocalDateTime maxTime = LocalDateTime.MIN;
-    private ArrayList<String> ipList = new ArrayList<>();
+    private HashSet<String> ipList = new HashSet<>();
     private HashMap<String, Integer> uniqVisit = new HashMap<>();
     private HashMap<LocalDateTime, Integer> requestMap = new HashMap<>();
     private HashSet<String> domainSet = new HashSet<>();
@@ -37,10 +36,8 @@ public class Statistics {
         }
         if ((logEntry.getResponseCode() > 399) && (logEntry.getResponseCode() < 600)) errorResponseCount++;
 
-        if (ipList == null) ipList.add(logEntry.getIp());
-        else {
-            if (!ipList.contains(logEntry.getIp())) ipList.add(logEntry.getIp());
-        }
+        ipList.add(logEntry.getIp());
+
         String domain = logEntry.getReferer();
         if (domain.split("//").length > 2) {
             if (!domainSet.contains(logEntry.getReferer().trim().split("//")[1].trim().split("/")[0]))
@@ -65,27 +62,27 @@ public class Statistics {
         return Math.round(((double) totalTraffic / time) * 1000) / 1000D;
     }
 
-    public ArrayList<String> getIpList() {
+    public HashSet<String> getIpList() {
         return ipList;
     }
 
-    public int averageVisitPerHour() {
+    public int calcAverageVisitPerHour() {
         return visitCount / maxTime.getHour() - minTime.getHour();
     }
 
-    public int averageErrorResponsePerHour() {
+    public int calcAverageErrorResponsePerHour() {
         return errorResponseCount / maxTime.getHour() - minTime.getHour();
     }
 
-    public int averageVisitPerUser() {
+    public int calcAverageVisitPerUser() {
         return visitCount / ipList.size();
     }
 
-    public int maxRequestPerSecond() {
+    public int getMaxRequestPerSecond() {
         return requestMap.values().stream().max(Integer::compareTo).get();
     }
 
-    public int maxVisitPerUser() {
+    public int getMaxVisitPerUser() {
         return uniqVisit.values().stream().max(Integer::compareTo).get();
     }
 

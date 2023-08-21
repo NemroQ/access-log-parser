@@ -24,10 +24,10 @@ public class Main {
             e.printStackTrace();
         }
         System.out.println("Общее количество траффика за час: " + stat.calcTrafficRate());
-        System.out.println("Среднее количество посещений за час: " + stat.averageVisitPerHour());
-        System.out.println("Среднее количество ошибок за час: " + stat.averageErrorResponsePerHour());
-        System.out.println("Среднее количество посещений одним пользователем: " + stat.averageVisitPerUser());
-        System.out.println("Максимальное количество запросов в секунду: " + stat.maxRequestPerSecond());
-        System.out.println("Максимальное количество визитов одним пользователем: " + stat.maxVisitPerUser());
+        System.out.println("Среднее количество посещений за час: " + stat.calcAverageVisitPerHour());
+        System.out.println("Среднее количество ошибок за час: " + stat.calcAverageErrorResponsePerHour());
+        System.out.println("Среднее количество посещений одним пользователем: " + stat.calcAverageVisitPerUser());
+        System.out.println("Максимальное количество запросов в секунду: " + stat.getMaxRequestPerSecond());
+        System.out.println("Максимальное количество визитов одним пользователем: " + stat.getMaxVisitPerUser());
     }
 }
