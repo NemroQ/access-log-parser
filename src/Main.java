@@ -4,8 +4,9 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Statistics stat = new Statistics();
-        System.out.println("Укажите путь к файлу:");
-        String path = new Scanner(System.in).nextLine();
+//        System.out.println("Укажите путь к файлу:");
+//        String path = new Scanner(System.in).nextLine();
+        String path = "C:\\project\\AccessLogParser\\resource\\access.log";
         try {
             FileReader fileReader = new FileReader(path);
             BufferedReader reader = new BufferedReader(fileReader);
@@ -24,5 +25,9 @@ public class Main {
             e.printStackTrace();
         }
         System.out.println("Общее количество траффика за час: " + stat.getTrafficRate());
+        System.out.println(stat.getOsList());
+        System.out.println(stat.getOsPart());
+        System.out.println(stat.getBrowserList());
+        System.out.println(stat.getBrowserPart());
     }
 }
