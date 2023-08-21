@@ -44,7 +44,8 @@ public class Statistics {
     }
 
     public double getTrafficRate() {
-        return (double) (totalTraffic / (maxTime.getHour() - minTime.getHour()));
+        long time = ChronoUnit.SECONDS.between(minTime, maxTime);
+        return Math.round(((double) totalTraffic / time) * 1000) / 1000D;
     }
 
     public HashMap<String, Double> getOsPart() {
@@ -92,8 +93,5 @@ public class Statistics {
             case (200) -> pageList.add(logEntry.getPath());
             case (404) -> unknownPageList.add(logEntry.getPath());
         }
-    public double getTrafficRate() {
-        long time = ChronoUnit.SECONDS.between(minTime, maxTime);
-        return Math.round(((double) totalTraffic / time) * 1000) / 1000D;
     }
 }
