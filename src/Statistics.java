@@ -1,6 +1,8 @@
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.time.temporal.ChronoUnit;
 
 public class Statistics {
     private long totalTraffic = 0;
@@ -90,5 +92,8 @@ public class Statistics {
             case (200) -> pageList.add(logEntry.getPath());
             case (404) -> unknownPageList.add(logEntry.getPath());
         }
+    public double getTrafficRate() {
+        long time = ChronoUnit.SECONDS.between(minTime, maxTime);
+        return Math.round(((double) totalTraffic / time) * 1000) / 1000D;
     }
 }
